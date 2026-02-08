@@ -1,95 +1,246 @@
 """
-Advanced Settings for Multi-Modal Bot
+Advanced Settings - Model Configurations & Performance Tuning
+Optimized for Python 3.14 + CPU-only inference
 """
 
-# Bot Identity
-BOT_NAME = "Buddy 🤖✨"
-BOT_SIGNATURE = "✨ Your AI Buddy"
+from typing import Dict, Any, List
 
-# Available Models with their strengths - MUST MATCH YOUR OLLAMA LIST
-MODEL_CONFIGS = {
-    "mistral:latest": {
-        "name": "Mistral",
-        "strength": "General knowledge, reasoning, coding",
-        "context": 8192,
-        "temperature": 0.7,
-        "best_for": ["general questions", "reasoning", "coding", "analysis"],
-        "emoji": "🌀"
-    },
+# =============== BOT IDENTITY ===============
+
+BOT_NAME: str = "Buddy ⚡"
+BOT_SIGNATURE: str = "🤖 Optimized for Speed"
+
+# =============== MODEL CONFIGURATIONS ===============
+
+MODEL_CONFIGS: Dict[str, Dict[str, Any]] = {
     "llama3.2:latest": {
         "name": "Llama 3.2",
-        "strength": "Balanced performance, creative writing",
-        "context": 4096,
-        "temperature": 0.8,
-        "best_for": ["creative writing", "general chat", "summarization"],
-        "emoji": "🦙"
+        "strength": "Ultra-fast, memory efficient",
+        "context": 2048,
+        "temperature": 0.4,
+        "num_predict": 400,
+        "cpu_threads": 4,
+        "memory_mb": 1500,
+        "emoji": "🦙",
+        "recommended": True,
+        "best_for": ["general", "fast", "chat"],
     },
-    "llama3.1:8b": {
-        "name": "Llama 3.1 8B",
-        "strength": "Good balance, smaller size",
-        "context": 4096,
-        "temperature": 0.7,
-        "best_for": ["general purpose", "balanced tasks"],
-        "emoji": "🦙"
+    "llama3.2:3b": {
+        "name": "Llama 3.2 (3B)",
+        "strength": "Fastest, lowest memory",
+        "context": 2048,
+        "temperature": 0.4,
+        "num_predict": 400,
+        "cpu_threads": 4,
+        "memory_mb": 800,
+        "emoji": "🦙",
+        "recommended": True,
+        "best_for": ["fast", "mobile", "simple"],
     },
-    "qwen:latest": {
-        "name": "Qwen",
-        "strength": "Multilingual, general purpose",
-        "context": 32768,
-        "temperature": 0.7,
-        "best_for": ["multilingual", "general tasks"],
-        "emoji": "🔢"
-    },
-    "qwen3:latest": {
-        "name": "Qwen 3",
-        "strength": "Multilingual, math, coding",
-        "context": 32768,
-        "temperature": 0.7,
-        "best_for": ["multilingual", "mathematics", "coding", "detailed analysis"],
-        "emoji": "🔢"
-    },
-    "qwen3-vl:latest": {
-        "name": "Qwen 3 Vision",
-        "strength": "Vision capabilities, image understanding",
-        "context": 32768,
-        "temperature": 0.7,
-        "best_for": ["image analysis", "visual content"],
-        "emoji": "👁️"
+    "mistral:latest": {
+        "name": "Mistral",
+        "strength": "Balanced quality & speed",
+        "context": 2048,
+        "temperature": 0.5,
+        "num_predict": 500,
+        "cpu_threads": 4,
+        "memory_mb": 3500,
+        "emoji": "🌀",
+        "recommended": True,
+        "best_for": ["reasoning", "analysis", "writing"],
     },
     "codellama:7b-instruct": {
         "name": "CodeLlama",
-        "strength": "Programming, code generation",
-        "context": 16384,
+        "strength": "Programming & code",
+        "context": 1024,
         "temperature": 0.2,
-        "best_for": ["coding", "debugging", "code explanation"],
-        "emoji": "💻"
+        "num_predict": 600,
+        "cpu_threads": 4,
+        "memory_mb": 3500,
+        "emoji": "💻",
+        "recommended": False,
+        "best_for": ["code", "debugging", "technical"],
     },
-    "OpenLLM-France/Lucie-7B-Instruct:latest": {
-        "name": "Lucie (French)",
-        "strength": "French language, European context",
-        "context": 4096,
-        "temperature": 0.7,
-        "best_for": ["french language", "european topics"],
-        "emoji": "🇫🇷"
-    }
+    "qwen2.5:latest": {
+        "name": "Qwen 2.5",
+        "strength": "Multilingual & reasoning",
+        "context": 2048,
+        "temperature": 0.5,
+        "num_predict": 500,
+        "cpu_threads": 4,
+        "memory_mb": 3000,
+        "emoji": "🔢",
+        "recommended": True,
+        "best_for": ["multilingual", "math", "logic"],
+    },
+    "phi3:latest": {
+        "name": "Phi-3",
+        "strength": "Compact & capable",
+        "context": 2048,
+        "temperature": 0.4,
+        "num_predict": 400,
+        "cpu_threads": 4,
+        "memory_mb": 1200,
+        "emoji": "🔮",
+        "recommended": True,
+        "best_for": ["fast", "reasoning", "chat"],
+    },
 }
 
-# Default model
-DEFAULT_MODEL = "mistral:latest"
+# =============== DEFAULTS ===============
 
-# Mode settings
-MODES = {
-    "auto": "🤖 Auto-select model and decide when to search",
-    "local": "💾 Use local knowledge only (no web search)",
-    "search": "🌐 Always search for current information",
-    "fast": "⚡ Fast mode (smaller context, no search)",
+DEFAULT_MODEL: str = "llama3.2:latest"
+AUTO_MODEL_SELECTION: bool = True
+
+# =============== OPERATION MODES ===============
+
+MODES: Dict[str, Dict[str, Any]] = {
+    "auto": {
+        "description": "Auto-decide when to search",
+        "emoji": "🤖",
+        "use_tools": True,
+        "temperature": 0.5,
+    },
+    "fast": {
+        "description": "Fast responses, no tools",
+        "emoji": "⚡",
+        "use_tools": False,
+        "temperature": 0.3,
+        "max_tokens": 300,
+    },
+    "local": {
+        "description": "Local knowledge only",
+        "emoji": "💾",
+        "use_tools": False,
+        "temperature": 0.4,
+    },
+    "search": {
+        "description": "Always search when needed",
+        "emoji": "🌐",
+        "use_tools": True,
+        "temperature": 0.5,
+        "force_search": True,
+    },
+    "code": {
+        "description": "Optimized for programming",
+        "emoji": "💻",
+        "use_tools": False,
+        "temperature": 0.2,
+        "model": "codellama:7b-instruct",
+    },
 }
 
-# Web Search Settings
-WEB_SEARCH_ENABLED = True
-MAX_WEB_SEARCHES = 2
-SEARCH_CACHE_TIME = 30
+# =============== PERFORMANCE TUNING ===============
 
-# Performance
-MAX_RESPONSE_LENGTH = 3000
-MAX_HISTORY_MESSAGES = 8
+# CPU-specific optimizations
+CPU_OPTIMIZATIONS = {
+    "batch_size": 4,              # Smaller batches for CPU cache efficiency
+    "num_thread": 4,              # Match physical cores (not hyperthreads)
+    "use_mmap": True,             # Memory-mapped file I/O
+    "use_mlock": False,           # Don't lock RAM (prevents OOM)
+}
+
+# Memory management
+MEMORY_LIMITS = {
+    "max_loaded_models": 2,       # Keep 2 models in RAM max
+    "swap_threshold": 0.8,        # Use swap at 80% RAM usage
+    "context_prune_threshold": 1800,  # Prune context at this token count
+}
+
+# Response optimization
+RESPONSE_SETTINGS = {
+    "max_length": 500,            # Max tokens per response
+    "timeout_seconds": 45,        # Kill slow requests
+    "streaming": False,           # Disable for CPU (adds overhead)
+    "retry_attempts": 2,          # Retry failed requests
+}
+
+# =============== QUERY PATTERNS FOR MODEL SELECTION ===============
+
+QUERY_PATTERNS = {
+    "code": [
+        r"\b(code|program|function|algorithm|debug|error|syntax|compile)\b",
+        r"\b(python|javascript|java|c\+\+|rust|go|html|css|sql|bash)\b",
+        r"\b(api|library|framework|git|docker|kubernetes)\b",
+    ],
+    "math": [
+        r"\b(calculate|compute|solve|equation|formula|math|algebra|calculus)\b",
+        r"\b(statistics|probability|matrix|vector|derivative|integral)\b",
+        r"[\d\+\-\*\/\=\(\)]{5,}",  # Math expressions
+    ],
+    "creative": [
+        r"\b(write|story|poem|creative|fiction|imagine|describe|narrative)\b",
+        r"\b(character|plot|scene|dialogue|novel|essay|blog)\b",
+    ],
+    "search": [
+        r"\b(current|latest|today|news|weather|price|stock|market)\b",
+        r"\b(2024|2025|recent|update|now|happening)\b",
+        r"\b(who is|what is|where is|when did|why did|how to)\b",
+    ],
+    "fast": [
+        r"^(hi|hello|hey|ok|yes|no|thanks|bye)$",  # Short greetings
+        r"\b(quick|fast|brief|short|simple|one word)\b",
+    ],
+}
+
+# =============== HELPER FUNCTIONS ===============
+
+def get_model_config(model_name: str) -> Dict[str, Any]:
+    """Get configuration for a specific model"""
+    return MODEL_CONFIGS.get(model_name, MODEL_CONFIGS[DEFAULT_MODEL])
+
+def get_recommended_models() -> List[str]:
+    """Get list of recommended models for CPU"""
+    return [
+        name for name, config in MODEL_CONFIGS.items()
+        if config.get("recommended", False)
+    ]
+
+def get_mode_config(mode: str) -> Dict[str, Any]:
+    """Get configuration for operation mode"""
+    return MODES.get(mode, MODES["auto"])
+
+def estimate_memory_usage(model_name: str, context_size: int = 2048) -> int:
+    """
+    Estimate RAM usage in MB for a model + context
+    Rough formula: base_memory + (context * 0.5)
+    """
+    config = get_model_config(model_name)
+    base = config.get("memory_mb", 2000)
+    context_overhead = (context_size / 2048) * 500  # ~500MB per 2K context
+    return int(base + context_overhead)
+
+def select_model_for_query(query: str, available_models: List[str]) -> str:
+    """
+    Simple model selection based on query content
+    """
+    import re
+
+    query_lower = query.lower()
+
+    # Check patterns
+    for category, patterns in QUERY_PATTERNS.items():
+        for pattern in patterns:
+            if re.search(pattern, query_lower):
+                if category == "code" and "codellama" in available_models:
+                    return "codellama:7b-instruct"
+                elif category == "math" and any("qwen" in m for m in available_models):
+                    return "qwen2.5:latest"
+                elif category == "fast":
+                    return "llama3.2:3b" if "llama3.2:3b" in available_models else "llama3.2:latest"
+
+    # Default to fastest recommended
+    for model in ["llama3.2:latest", "phi3:latest", "mistral:latest"]:
+        if model in available_models:
+            return model
+
+    # Fallback
+    return available_models[0] if available_models else DEFAULT_MODEL
+
+
+# Validation on import
+if __name__ == "__main__":
+    print(f"✅ Advanced settings loaded")
+    print(f"   Default model: {DEFAULT_MODEL}")
+    print(f"   Recommended: {get_recommended_models()}")
+    print(f"   Modes: {list(MODES.keys())}")

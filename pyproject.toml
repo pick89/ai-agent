@@ -1,34 +1,38 @@
 [tool.poetry]
 name = "ai-agent"
-version = "0.1.0"
-description = "Local AI agent with Ollama and Telegram and automate some task"
+version = "0.2.0"
+description = "High-performance local AI agent with Ollama and Telegram"
 authors = ["Your Name <you@example.com>"]
 license = "MIT"
 readme = "README.md"
 package-mode = false
 
 [tool.poetry.dependencies]
-python = "^3.14"
-ollama = "^0.6.1"
-python-telegram-bot = "^22.6"
-requests = "^2.32.5"
-beautifulsoup4 = "^4.14.3"
-duckduckgo-search = "^8.1.1"
-httpx = "^0.28.1"
-pandas = "^3.0.0"
-numpy = "^2.4.2"
-matplotlib = "^3.10.8"
-python-dotenv = "^1.2.1"
-aiohttp = "^3.13.3"
-ddgs = "^9.10.0"
+# Python 3.14 support
+python = ">=3.14.0a0,<3.15"
+
+# Core - Zero compiled dependencies for 3.14 compatibility
+ollama = "^0.3.0"
+python-telegram-bot = {version = "^22.6", extras = ["job-queue", "rate-limiter"]}
+httpx = "^0.27.0"
+aiohttp = "^3.9.0"
+aiofiles = "^24.0.0"
+
+# Search - Pure Python
+duckduckgo-search = "^7.0.0"
+
+# Data processing (will build from source on 3.14)
+numpy = {version = "^2.1.0", allow-prereleases = true}
+pandas = {version = "^2.2.0", allow-prereleases = true}
+
+# Utils
+python-dotenv = "^1.0.0"
+tenacity = "^8.0.0"
 
 [tool.poetry.group.dev.dependencies]
-pytest = "^9.0.2"
-black = "^26.1.0"
-flake8 = "^7.3.0"
-ipython = "^9.10.0"
+pytest = "^8.0.0"
+black = "^24.0.0"
 
 [build-system]
-requires = ["poetry-core"]
+requires = ["poetry-core>=1.8.0"]
 build-backend = "poetry.core.masonry.api"
-
