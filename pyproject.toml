@@ -20,6 +20,7 @@ numpy = "^2.4.2"
 matplotlib = "^3.10.8"
 python-dotenv = "^1.2.1"
 aiohttp = "^3.13.3"
+ddgs = "^9.10.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^9.0.2"
