@@ -252,9 +252,14 @@ systemctl --user status ai-agent
 - **Branches**: `feature/name` or `fix/issue`
 - **Testing**: Run `poetry run pytest` before committing
 
+## Available Skills & Agents
+
+**BMAD-METHOD**: Agile AI development framework with expert agents for project planning, architecture, and workflow guidance. Use `bmad-help` for next steps. Install: `npx bmad-method install`.
+
 ## References
 
 - **Python Telegram Bot**: https://python-telegram-bot.readthedocs.io/
 - **Ollama API**: https://github.com/ollama/ollama/blob/main/docs/api.md
 - **Poetry**: https://python-poetry.org/docs/
 - **Async Python**: https://docs.python.org/3/library/asyncio.html
+- **BMAD-METHOD**: https://github.com/bmad-code-org/BMAD-METHOD
